@@ -10,9 +10,7 @@ export default function Jogo() {
   const navigate = useNavigate();
 
   const resolverBug = () => {
-    setEnergia((prev) => Math.max(prev - 10, 0));
-    setFoco((prev) => Math.max(prev - 5, 0));
-    ganharXp(20);
+    navigate('/menuBug')
   };
 
   const tomarCafe = () => {

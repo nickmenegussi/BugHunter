@@ -5,6 +5,7 @@ import Cadastro from './pages/cadastro';
 import Jogo from './pages/jogo';
 import Status from './pages/status';
 import Resultado from './pages/resultado';
+import BugFixMenu from './pages/MenuBug';
 
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/jogo" element={<Jogo />} />
         <Route path="/status" element={<Status />} />
         <Route path="/resultado" element={<Resultado />} />
+        <Route path="/menuBug" element={<BugFixMenu />} />
       </Routes>
     </Router>
   );
