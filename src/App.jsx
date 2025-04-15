@@ -1,24 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SideBar from './components/Sidebar';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/home';
-// import Cadastro from './pages/cadastro';
-// import Jogo from './pages/jogo';
-// import Status from './pages/status';
-// import Resultado from './pages/resultado';
-// import BugFixMenu from './pages/MenuBug';
+import NavBar from './components/Navbar';
 
+const App = () => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/';
 
-export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/jogo" element={<Jogo />} />
-        <Route path="/status" element={<Status />} />
-        <Route path="/resultado" element={<Resultado />} />
-        <Route path="/menuBug" element={<BugFixMenu />} /> */}
-      </Routes>
-    </Router>
+    <div className='flex'>
+      {/* <SideBar />
+      <NavBar /> */}
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
+    </div>
   );
-}
+};
+
+export default App;
