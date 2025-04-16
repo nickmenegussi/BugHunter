@@ -2,6 +2,24 @@ const connection = require('../config/db')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+exports.viewUser = (req, res) => {
+    connection.query('SELECT * FROM User', (err, result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Erro ao se conectar com o servidor.',
+                success: false,
+                data: err
+            })
+        }
+
+        return res.status(200).json({
+            message: 'Usuário exibido com sucesso.',
+            success: true,
+            data: result
+        })
+    })
+}
+
 exports.createRegister = (req, res) => {
     const {nameUser, emailUser, senhaUser, ageUser} = req.body
 
@@ -50,7 +68,7 @@ exports.createRegister = (req, res) => {
 exports.createLogin = (req, res) => {
     const {emailUser, senhaUser} = req.body 
 
-    if(!emailUser || senhaUser){
+    if(!emailUser || !senhaUser){
         return res.status(400).json({
             message: 'Preencha todos os campos.',
             success: false
@@ -97,11 +115,11 @@ exports.createLogin = (req, res) => {
 }
 
 exports.updatNameUser = (req, res) => {
-    const {idUser} = req.parans
+    const {idUser} = req.params
     const {nameUser} = req.body 
 
 
-    if(!nameUser){
+    if(!nameUser || !idUser){
         return res.status(400).json({
             message: 'Preencha todos os campos.',
             success: false
@@ -139,5 +157,166 @@ exports.updatNameUser = (req, res) => {
                 data: result
             })
         })
+    })
+}
+
+exports.updateEmailUser = (req, res) => {
+    const {emailUser} = req.body 
+    const {idUser} = req.params
+
+    if(!emailUser || !idUser){
+        return res.status(400).json({
+            message: 'Preencha todos os campos.',
+            success: false
+        })
+    }
+
+    connection.query('SELECT * FROM User where idUser = ?', [idUser], (err, result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Erro ao se conectar com o servidor.',
+                success: false,
+                data: err
+            })
+        }
+
+        if(result.length === 0){
+            return res.status(400).json({
+                message: 'Este usuário não existe. Verifique os dados e tente novamente.',
+                success: false,
+                data: err 
+            })
+        }
+        
+        connection.query('UPDATE User set emailUser = ? where idUser = ?', [emailUser, idUser], (err, result) => {
+            if(err){
+                return res.status(500).json({
+                    message: 'Erro ao se conectar com o servidor.',
+                    success: false,
+                    data: err
+                })
+            }
+
+            return res.status(201).json({
+                message: 'Email do usuário trocado com sucesso.',
+                success: true,
+                data: result
+            })
+        })
+    })
+}
+
+exports.updateSenhaUser = (req, res) => {
+    const {idUser} = req.params 
+    const antigaSenha = req.body 
+    const novaSenha = req.body 
+
+    if(!antigaSenha || !novaSenha || !idUser){
+        return res.status(400).json({
+            message: 'Preencha todos os campos.',
+            success: false 
+        })
+    }
+
+    connection.query('SELECT * FROM User where idUser = ?', [idUser], (err, result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Erro ao se conectar com o servidor.',
+                success: false,
+                data: err
+            })
+        }
+
+        if(result.length === 0){
+            return res.status(400).json({
+                message: 'Este usuário não existe. Verifique os dados e tente novamente.',
+                success: false,
+                data: err 
+            })
+        }
+
+        const user = result[0]
+        const isPasswordTheSame = bcrypt.compare(antigaSenha, user.senhaUser)
+
+        if(!isPasswordTheSame){
+            return res.status(400).json({
+                message: 'As senha não coincidem, tente novamente.',
+                success: false,
+                data: err
+            })
+        }
+
+        const hashPassword = bcrypt.hash(novaSenha, 10)
+
+       connection.query('UPDATE User set senhaUser = ? where idUser = ?', [hashPassword, idUser], (err, result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Erro ao se conectar com o servidor.',
+                success: false,
+                data: err
+            })
+        }
+
+        return res.status(200).json({
+            message: 'Senha alterada com sucesso.',
+            success: true,
+            data: result
+        })
+       })
+    })
+}
+
+exports.DeleteUser = (req, res) => {
+    const {idUser} = req.params
+
+    connection.query('SELECT * FROM User where idUser = ?', [idUser], (err, result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Erro ao se conectar com o servidor.',
+                success: false,
+                data: err
+            })
+        }
+
+        if(result.length === 0){
+
+        }
+
+        connection.query('DELETE FROM Experiencies where userId = ?', [idUser], (err,result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Erro ao deletar as Experiências do usuário.',
+                    success: false,
+                    data: err
+                })
+            }
+
+            connection.query('DELETE FROM Historic where user_id = ?', [idUser], (err,result) => {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Erro ao deletar histórico do usuário.',
+                        success: false,
+                        data: err
+                    })
+                }
+
+                connection.query('DELETE FROM User where idUser = ?', [idUser], (err,result) => {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Erro ao deletar usuário.',
+                            success: false,
+                            data: err
+                        })
+                    }
+
+                    return res.status(201).json({
+                        message: 'Succeso ao deletar usuário.',
+                        success: true,
+                        data: result
+                    })
+                })
+            })
+        })
+
     })
 }
