@@ -167,9 +167,139 @@ exports.updateAmountOfExperiencie = (req, res) => {
 
     connection.query('SELECT * FROM Experiencies where idExperiencies = ?', [idExperiencies], (err, result) => {
         if(err){
-            
+            return res.status(500).json({
+                message: 'Erro ao atualizar o grau de formação.',
+                success: false,
+                data: err
+            })
         }
+
+        if(result.length === 0){
+            return res.status(404).json({
+                message: 'Experiência não existe, por favor, tente novamente.',
+                success: false,
+                data: err 
+            })
+        }
+
+        connection.query('UPDATE Experiencies SET amountOfExperiencie = ? WHERE idExperiencies = ?', [amountOfExperiencie, idExperiencies], (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Erro ao atualizar a quantidade de experiência.',
+                    success: false,
+                    data: err
+                })
+            }
+    
+            return res.status(200).json({
+                message: 'Quantidade de experiência atualizado com sucesso.',
+                success: true,
+                data: result
+            })
+        })
     })
+}
+exports.updateAreaAtuation = (req, res) => {
+    const { areaAtuation } = req.body
+    const { idExperiencies } = req.params
+
+    if (!areaAtuation || !idExperiencies) {
+        return res.status(400).json({
+            message: 'Preencha todos os campos.',
+            success: false
+        })
+    }
+
+    if(areaAtuation !== 'Front-End' && areaAtuation !== 'Back-End' && areaAtuation !== 'Full-Stack' && areaAtuation !== 'Mobile'){
+        return res.status(400).json({
+            message: 'Opção inválida, informe uma opção válida.',
+            success: false
+        }) 
+    }
+
+    connection.query('SELECT * FROM Experiencies where idExperiencies = ?', [idExperiencies], (err,result) => {
+        if(err){
+            return res.status(500).json({
+                message: 'Erro ao atualizar o grau de formação.',
+                success: false,
+                data: err
+            })
+        }
+
+        if(result.length === 0){
+            return res.status(404).json({
+                message: 'Experiência não existe, por favor, tente novamente.',
+                success: false,
+                data: err 
+            })
+        }
+
+        connection.query('UPDATE Experiencies SET areaAtuation = ? WHERE idExperiencies = ?', [areaAtuation, idExperiencies], (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Erro ao atualizar área de atuação.',
+                    success: false,
+                    data: err
+                })
+            }
+    
+            return res.status(200).json({
+                message: 'Área de atuação atualizada com sucesso.',
+                success: true,
+                data: result
+            })
+        })
+    })
+}
+
+exports.updateCurrentPosition = (req, res) => {
+    const { currentPosition } = req.body
+    const { idExperiencies } = req.params
+
+    if (!currentPosition || !idExperiencies) {
+        return res.status(400).json({
+            message: 'Preencha todos os campos.',
+            success: false
+        })
+    }
+
+    if(currentPosition !== 'Dev Júnior' && currentPosition !== 'Dev Pleno' && currentPosition !== 'Dev Sênior' && currentPosition !== 'Técnico' && currentPosition !== 'Estágiario'){
+        return res.status(400).json({
+            message: 'Opção inválida, informe uma opção válida.',
+            success: false
+        }) 
+    }
+
+    connection.query('SELECT * FROM Experiencies WHERE idExperiencies = ?', [idExperiencies], (err, result) => {
+        if(err){
+
+        }
+
+        if(result.length === 0){
+            return res.status(404).json({
+                message: 'Experiência não existe, por favor, tente novamente.',
+                success: false,
+                data: err 
+            })
+        }
+
+        connection.query('UPDATE Experiencies SET currentPosition = ? WHERE idExperiencies = ?', [currentPosition, idExperiencies], (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Erro ao atualizar cargo atual.',
+                    success: false,
+                    data: err
+                })
+            }
+    
+            return res.status(200).json({
+                message: 'Cargo atual atualizado com sucesso.',
+                success: true,
+                data: result
+            })
+        })
+    })
+    
 }
 
 exports.deleteExperiencies = (req, res) => {

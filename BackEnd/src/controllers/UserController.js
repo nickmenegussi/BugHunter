@@ -57,7 +57,7 @@ exports.createRegister = (req, res) => {
             } 
 
             return res.status(201).json({
-                message: 'Cadatro criado com suceso!',
+                message: 'Cadastro criado com suceso!',
                 success: true,
                 data: result
             })
