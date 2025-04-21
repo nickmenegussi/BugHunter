@@ -5,7 +5,7 @@ export default function Login() {
     const navigate = useNavigate()
 
   return (
-    <div className='min-h-screen flex flex-col bg-gradient-to-br from-zinc-900 to-slate-800 text-white p-4 justify-center items-center'>
+    <div className='min-h-screen flex flex-col bg-gradient-to-bl from-zinc-900 to-slate-800 text-white p-4 justify-center items-center'>
         <div className='p-5 min-md:w-[450px] h-full rounded-lg bg-[#121A2B] max-xl:w-[400px]'>
             <h1 className='font-bold text-3xl text-center'>Login</h1>
             <div className='text-start mt-5 flex flex-col gap-6'>

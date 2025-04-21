@@ -5,6 +5,7 @@ import Cadastro from './pages/auth/Cadastro';
 import PaginaErro from './pages/PaginaErro';
 import Login from './pages/auth/login';
 import Experiences from './pages/Experiences';
+import Jogo from './pages/Jogo';
 
 // import Cadastro from './pages/cadastro';
 // import Jogo from './pages/jogo';
@@ -19,7 +20,7 @@ export default function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/cadastro" element={<Cadastro/>}  />
         <Route path="/experiences" element={<Experiences/>}  />
-
+        <Route path='/jogo' element={<Jogo />}/>
         {/* <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/jogo" element={<Jogo />} />
         <Route path="/status" element={<Status />} />
