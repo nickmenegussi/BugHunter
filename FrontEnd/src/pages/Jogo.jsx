@@ -15,42 +15,40 @@ export default function Jogo() {
 
   const ganharXp = (valor) => {
     const novoXp = xp + valor
-    if(novoXp >= 100){
-        setNivel(nivel + 1)
-        setXp(novoXp - 100)
+    if (novoXp >= 100) {
+      setNivel(nivel + 1)
+      setXp(novoXp - 100)
     } else {
-        setXp(novoXp)
+      setXp(novoXp)
     }
   };
 
   const resolverBug = () => {
     // a função Math.max é para previnir que o foco e a energia ultrapasse 100, antes da virgula ele fazer alguma alteração matemática e depois da vírgula dizer o máximo.
-    if(foco <= 0 && energia <= 0){
-        alert('Por favor, tente jogar novamente. Você não tem mais energia e nem disposição.')
+    if (foco <= 0 && energia <= 0) {
+      alert('Por favor, tente jogar novamente. Você não tem mais energia e nem disposição.')
     } else {
-        setEnergia((e) => Math.max(e - 10, 0))
-        setFoco((e) => Math.max(e - 10, 0)) 
-        ganharXp(10)
+      setEnergia((e) => Math.max(e - 10, 0))
+      setFoco((e) => Math.max(e - 10, 0))
+      ganharXp(10)
     }
   }
 
   const tomarCafe = () => {
     // a função Math.min é para previnir que o foco e a energia ultrapasse 100, antes da virgula ele fazer alguma alteração matemática e depois da vírgula dizer o máximo.
-    if(foco >= 100){
-        alert('Você já está com disposição suficiente para continuar')
+    if(energia <= 0){
+      alert('Você não tem energia suficiente para tomar café, por tanto, você morreu.')
     } else {
-        setEnergia((e) => {
-            do {
-
-            } while()
-        })
+      if (foco >= 100) {
+        alert('Você já está com disposição suficiente para continuar')
+      } 
+      else {
+        setCafe((e) => e + 1)
         setFoco((e) => Math.min(e + 5, 100))
-        if(cafe === 30){
-            alert('Você teve uma overdose de café, por tanto, você morreu.')
-        } else {
-            setCafe((e) => e + 1)
-        }
+        setEnergia((e) => Math.min(e + 5, 100))
+      }
     }
+    
   };
 
   const barraStatus = (valor, cor) => (
@@ -82,13 +80,17 @@ export default function Jogo() {
             <label className="text-sm text-gray-400">
               Xp: {xp}%
               {barraStatus((xp / 100) * 100, "bg-blue-500")}
-            
+
             </label>
           </div>
           <div>
             <label className="text-sm text-gray-400">
               Café tomados: {cafe}/30
-              
+            </label>
+          </div>
+          <div>
+            <label className="text-sm text-gray-400">
+              Nível: {nivel}/5
             </label>
           </div>
         </div>
@@ -111,7 +113,7 @@ export default function Jogo() {
             <Link className="bg-">Ver status completo</Link>
             <button
               className="bg-[#FFA500] hover:bg-yellow-600 rounded-sm h-10 w-[40%] cursor-pointer"
-              onClick={() => {}}
+              onClick={() => { }}
             >
               Encerrar Dia
             </button>
