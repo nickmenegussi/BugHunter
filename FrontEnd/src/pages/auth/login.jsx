@@ -1,8 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import api from '../../services/api'
 
 export default function Login() {
     const navigate = useNavigate()
+    const [login, setLogin] = useState({
+        emailUser: '',
+        senhaUser: ''
+    })
+
+    async function loginUser(){ 
+        try {
+            const response = await api.post('/user/user/login', login)
+            alert(response.data.message)
+            localStorage.setItem('@Auth:token', JSON.stringify(response.data.data))
+            navigate('/home')
+        } catch (error) {
+            if(error.response){
+                alert(error.response.data.message)
+            } else {
+                alert(error)
+            }
+        }
+
+    }
 
     return (
         <div className='min-h-screen flex flex-col bg-gradient-to-bl from-zinc-900 to-slate-800 text-white p-4 justify-center items-center'>
@@ -12,6 +33,7 @@ export default function Login() {
                     <label className='text-sm font-medium'>
                         Digite seu email:
                         <input
+                            onChange={(e) => setLogin({ ...login, emailUser: e.target.value })}
                             type="text"
                             required
                             placeholder='Ex: exemplo@gmail.com'
@@ -21,6 +43,7 @@ export default function Login() {
                     <label className='text-sm font-medium'>
                         Digite sua senha:
                         <input
+                            onChange={(e) => setLogin({ ...login, senhaUser: e.target.value })}
                             type="password"
                             required
                             placeholder='Ex: senha123'
@@ -43,7 +66,7 @@ export default function Login() {
                     </div>
                     <button
                         className='bg-[#4F46E5] hover:bg-indigo-500 rounded-md h-10 font-semibold transition duration-300'
-                        onClick={() => navigate('/home')}
+                        onClick={loginUser}
                     >
                         Entrar
                     </button>

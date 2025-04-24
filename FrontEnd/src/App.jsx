@@ -6,6 +6,7 @@ import PaginaErro from './pages/PaginaErro';
 import Login from './pages/auth/login';
 import Experiences from './pages/Experiences';
 import Jogo from './pages/Jogo';
+import Resultado from './pages/resultado';
 
 // import Cadastro from './pages/cadastro';
 // import Jogo from './pages/jogo';
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/cadastro" element={<Cadastro/>}  />
         <Route path="/experiences" element={<Experiences/>}  />
         <Route path='/jogo' element={<Jogo />}/>
+        <Route path='/resultado' element={<Resultado />}/>
         {/* <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/jogo" element={<Jogo />} />
         <Route path="/status" element={<Status />} />

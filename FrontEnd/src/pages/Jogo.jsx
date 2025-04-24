@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Jogo() {
   const [energia, setEnergia] = useState(100);
@@ -8,9 +8,12 @@ export default function Jogo() {
   const [xp, setXp] = useState(0);
   const [nivel, setNivel] = useState(0);
   const [cafe, setCafe] = useState(0)
+  const navigate = useNavigate()
 
   const encerrarDia = () => {
-
+    const dados = {cafe, nivel, xp, energia, foco}
+    localStorage.setItem('@Jogo:status', JSON.stringify(dados))
+    navigate('/resultado')
   };
 
   const ganharXp = (valor) => {
@@ -25,8 +28,9 @@ export default function Jogo() {
 
   const resolverBug = () => {
     // a função Math.max é para previnir que o foco e a energia ultrapasse 100, antes da virgula ele fazer alguma alteração matemática e depois da vírgula dizer o máximo.
-    if (foco <= 0 && energia <= 0) {
-      alert('Por favor, tente jogar novamente. Você não tem mais energia e nem disposição.')
+    if (foco <= 0 || energia <= 0) {
+      alert('Por favor, tente jogar novamente. Você não tem mais energia e nem disposição. Tome café se ainda não tiver tomado.')
+      encerrarDia()
     } else {
       setEnergia((e) => Math.max(e - 10, 0))
       setFoco((e) => Math.max(e - 10, 0))
@@ -37,15 +41,22 @@ export default function Jogo() {
   const tomarCafe = () => {
     // a função Math.min é para previnir que o foco e a energia ultrapasse 100, antes da virgula ele fazer alguma alteração matemática e depois da vírgula dizer o máximo.
     if(energia <= 0){
-      alert('Você não tem energia suficiente para tomar café, por tanto, você morreu.')
-    } else {
+      alert('Você não tem energia suficiente para tomar café, por tanto, você morreu. E será redirecionado para a tela de status.')
+      encerrarDia()
+    } else {  
       if (foco >= 100) {
         alert('Você já está com disposição suficiente para continuar')
       } 
       else {
-        setCafe((e) => e + 1)
-        setFoco((e) => Math.min(e + 5, 100))
-        setEnergia((e) => Math.min(e + 5, 100))
+        if(cafe >= 30){
+          setCafe((e) => e + 1)
+          alert('Você não pode tomar mais café, pois já tomou o máximo de café possível. Iremos te redirecionar para a tela de status.')
+        } else {
+          setFoco((e) => Math.min(e + 5, 100))
+          setEnergia((e) => Math.min(e + 5, 100))
+          setCafe((e) => e + 1)
+        }
+        
       }
     }
     
@@ -109,10 +120,10 @@ export default function Jogo() {
               Tomar Café
             </button>
           </div>
-          <div className="flex justify-space-around">
+          <div className="flex justify-between">
             <Link className="bg-">Ver status completo</Link>
             <button
-              className="bg-[#FFA500] hover:bg-yellow-600 rounded-sm h-10 w-[40%] cursor-pointer"
+              className="bg-indigo-600 hover:bg-indigo-500 rounded-sm h-10 w-[40%] cursor-pointer"
               onClick={() => { }}
             >
               Encerrar Dia
