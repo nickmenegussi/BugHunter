@@ -1,9 +1,9 @@
 const connection = require('../config/db')
 
 exports.createExperiences = (req, res) => {
-    const {degree, amoutOfExperiencie, currentPosition, areaAtuation, userId} = req.body 
+    const {degree, amountOfExperiencie, currentPosition, areaAtuation, userId} = req.body 
 
-    if(!degree || !amoutOfExperiencie || !currentPosition || !areaAtuation || !userId){
+    if(!degree || !amountOfExperiencie || !currentPosition || !areaAtuation || !userId){
         return res.status(400).json({
             message: 'Preencha todos os campos.',
             success: false
@@ -24,7 +24,7 @@ exports.createExperiences = (req, res) => {
         })
     }
 
-    connection.query('SELECT * FROM Experiencies where degree = ? and amoutOfExperiencie = ? and currentPosition = ? and areaAtuation = ? and userId = ?', [degree, amoutOfExperiencie, currentPosition, areaAtuation, userId] ,(err,resultCreate) => {
+    connection.query('SELECT * FROM Experiencies where degree = ? and amountOfExperiencie = ? and currentPosition = ? and areaAtuation = ? and userId = ?', [degree, amountOfExperiencie, currentPosition, areaAtuation, userId] ,(err,resultCreate) => {
         if(err){
             return res.status(500).json({
                 message: 'Erro ao se conectar com o servidor.',
@@ -33,14 +33,14 @@ exports.createExperiences = (req, res) => {
             })
         }
 
-        if(result.length > 0){
+        if(resultCreate.length > 0){
             return res.status(422).json({
                 message: 'Esse usuário já possui essas experiências, portanto, ele só pode altera-las.',
                 success: false,
             })
         }
 
-        connection.query('INSERT INTO Experiencies(degree,amountOfExperiencie, currentPosition, areaAtuation, userId) VALUES(?, ?, ? ,? ,?)', [degree, amoutOfExperiencie, currentPosition, areaAtuation, userId], (err, result) => {
+        connection.query('INSERT INTO Experiencies(degree,amountOfExperiencie, currentPosition, areaAtuation, userId) VALUES(?, ?, ? ,? ,?)', [degree, amountOfExperiencie, currentPosition, areaAtuation, userId], (err, result) => {
             if (err){
                 return res.status(500).json({
                     message: 'Erro ao se conectar com o servidor.',

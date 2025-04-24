@@ -92,7 +92,7 @@ exports.createLogin = (req, res) => {
         }
 
         const resultado = result[0]
-        const UnHashPassword =  await bcrypt.compare(senhaUser, resultado.senha)
+        const UnHashPassword =  await bcrypt.compare(senhaUser, resultado.senhaUser)
 
         if(!UnHashPassword){
             return res.status(400).json({
