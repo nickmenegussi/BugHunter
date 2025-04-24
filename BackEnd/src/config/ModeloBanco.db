@@ -6,7 +6,7 @@ CREATE TABLE User(
     nameUser varchar(255) not null,
     emailUser varchar(255) not null,
     senhaUser varchar(255) NOT NULL,
-    ageUser varchar(255) not null
+    ageUser int not null
 );
 
 CREATE TABLE Experiencies(

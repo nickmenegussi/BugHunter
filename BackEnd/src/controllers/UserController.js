@@ -30,7 +30,7 @@ exports.createRegister = (req, res) => {
         })
     }
 
-    connection.query('SELECT * FROM User where nameUser = ? and emailUser = ?', [nameUser, emailUser], (err,result) => {
+    connection.query('SELECT * FROM User where nameUser = ? and emailUser = ?', [nameUser, emailUser], async (err,result) => {
         if(err){
             return res.status(500).json({
                 message: 'Erro ao se conectar com o servidor.',
@@ -39,7 +39,7 @@ exports.createRegister = (req, res) => {
             })
         }
 
-        const hashPasword = bcrypt.hash(senhaUser, 10)
+        const hashPasword = await bcrypt.hash(senhaUser, 10)
 
         if(result.length > 0){
             return res.status(422).json({
