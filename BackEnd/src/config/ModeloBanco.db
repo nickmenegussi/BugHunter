@@ -1,0 +1,34 @@
+CREATE DATABASE BugHunter;
+USE BugHunter;
+
+CREATE TABLE User(
+	idUser int not null primary key auto_increment,
+    nameUser varchar(255) not null,
+    emailUser varchar(255) not null,
+    senhaUser varchar(255) NOT NULL,
+    ageUser int not null
+);
+
+CREATE TABLE Experiencies(
+	idExperiencies INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    degree enum('Técnico', 'Graduação', 'Pós-Graduação', 'Doutorado', 'Mestrado'),
+    amountOfExperiencie INT NOT NULL,
+    currentPosition ENUM('Dev Júnior', 'Dev Pleno', 'Dev Sênior', 'Técnico', 'Estágiario'),
+    areaAtuation ENUM('Front-End', 'Back-End', 'Full Stack', 'Mobile'),
+    userId INT NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES User(idUser)
+);
+
+CREATE TABLE Historic(
+	idHistoric INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    xp_ganho TEXT,
+    bugs_resolvidos text,
+    foco_gasto int not null,
+    vida_restante INT NOT NULL,
+    tentativasErradas INT NULL,
+    encerradoPor ENUM('Falta de vida', 'Muitas Tentativas'),
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(idUser)
+)
