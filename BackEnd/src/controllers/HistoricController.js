@@ -12,11 +12,11 @@ exports.createHitoric = (req, res) => {
         })
     }
 
-    if(encerradorPor !== 'Falta de vida' && 'Muitas Tentativas'){
+    if (encerradoPor !== 'Falta de vida' && encerradoPor !== 'Muitas Tentativas') {
         return res.status(400).json({
-            message: 'Por favor, digite uma posição válida do nosso menu.',
+            message: 'Por favor, digite uma posição válida para encerramento.',
             success: false
-        })
+        });
     }
 
     connection.query('SELECT * FROM Historic WHERE user_id = ? AND xp_ganho = ? AND foco_gasto = ? AND bugs_resolvidos = ? AND encerradoPor = ? AND tentativasErradas = ? AND vida_restante = ?',

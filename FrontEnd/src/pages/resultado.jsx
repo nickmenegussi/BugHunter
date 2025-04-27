@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../services/api'; // ajuste o caminho
 
 export default function Resultado() {
-  const nome = JSON.parse(localStorage.getItem('@Auth:token'))
+  const nome = JSON.parse(localStorage.getItem('@Auth:token'));
   const status = JSON.parse(localStorage.getItem('@Jogo:status')) || {
     energia: 0,
     foco: 0,
@@ -11,6 +12,27 @@ export default function Resultado() {
   };
 
   const progresso = (status.xp / 100) * 100;
+
+  useEffect(() => {
+    async function saveHistoric() {
+      try {
+        await api.post('/historic/create', {
+          user_id: nome.user.idUser,   
+          xp_ganho: status.xp,
+          bugs_resolvidos: 0, 
+          foco_gasto: status.foco,
+          vida_restante: status.energia,
+          tentativasErradas: 0, 
+          encerradoPor: "Falta de vida"
+        });
+        console.log('Histórico salvo com sucesso!');
+      } catch (error) {
+        console.error('Erro ao salvar histórico:', error.response?.data || error.message);
+      }
+    }
+
+    saveHistoric();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-zinc-900 to-gray-800 text-white flex flex-col items-center justify-center px-4">
@@ -40,7 +62,6 @@ export default function Resultado() {
           >
             Jogar de Novo
           </Link>
-          
         </div>
       </div>
     </div>

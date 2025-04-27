@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Jogo() {
+    const nome = JSON.parse(localStorage.getItem('@Auth:token'))
   const [energia, setEnergia] = useState(100);
   const [foco, setFoco] = useState(65);
   const [xp, setXp] = useState(0);
@@ -28,7 +29,7 @@ export default function Jogo() {
 
   const resolverBug = () => {
     // a função Math.max é para previnir que o foco e a energia ultrapasse 100, antes da virgula ele fazer alguma alteração matemática e depois da vírgula dizer o máximo.
-    if (foco <= 0 || energia <= 0) {
+    if (foco <= 0 && energia <= 0) {
       alert('Por favor, tente jogar novamente. Você não tem mais energia e nem disposição. Tome café se ainda não tiver tomado.')
       encerrarDia()
     } else {
@@ -51,6 +52,7 @@ export default function Jogo() {
         if(cafe >= 30){
           setCafe((e) => e + 1)
           alert('Você não pode tomar mais café, pois já tomou o máximo de café possível. Iremos te redirecionar para a tela de status.')
+          encerrarDia()
         } else {
           setFoco((e) => Math.min(e + 5, 100))
           setEnergia((e) => Math.min(e + 5, 100))
@@ -74,7 +76,7 @@ export default function Jogo() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-bl from-zinc-900 to-slate-800 text-white p-4 justify-center items-center">
       <div className="p-10 min-md:w-[450px] h-full rounded-lg bg-[rgb(18,26,43)] max-xl:w-[400px]">
-        <h1 className="text-center font-bold text-3xl">Olá, Dev!</h1>
+        <h1 className="text-center font-bold text-3xl">Olá, {nome.user.nameUser} Dev!</h1>
         <div className="space-y-4 mb-5">
           <div>
             <label className="text-sm text-gray-400">
@@ -121,10 +123,10 @@ export default function Jogo() {
             </button>
           </div>
           <div className="flex justify-between">
-            <Link className="bg-">Ver status completo</Link>
+            <Link className="text-indigo-600 hover:text-indigo-500" to={'/resultado'}>Ver status completo</Link>
             <button
               className="bg-indigo-600 hover:bg-indigo-500 rounded-sm h-10 w-[40%] cursor-pointer"
-              onClick={() => { }}
+              onClick={encerrarDia}
             >
               Encerrar Dia
             </button>
