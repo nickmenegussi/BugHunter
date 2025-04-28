@@ -19,16 +19,17 @@ Antes de instalar o projeto, certifica-se de que você tem os seguintes requisit
 
 ### Instalando
 
-1. Instalar dependências
+* Instalar dependências
 Após clonar o repositório, navegue até a pasta do projeto e execute o comando para instalar as dependências do Node.js:
 ```
 npm install
 ```
-2.Clonar o repositório
-   ```
+* Clonar o repositório
+
+```
   git clone https://github.com/nickmenegussi/BugHunter
 ```
-* 3. Criar o arquivo .env para o Backend
+* Criar o arquivo .env para o Backend
 Na pasta do backend do projeto, crie um arquivo chamado .env. Esse arquivo é onde você armazenará variáveis de ambiente, como a chave secreta para a autenticação JWT. Pois, isso é necessário para o funcionamento do login e cadastro, permitindo a criação e verificação de tokens JWT.
 ```
 JWT_SECRET="Alguma senha secreta"
