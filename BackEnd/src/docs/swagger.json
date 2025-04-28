@@ -1,0 +1,23 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Exemplo",
+    "version": "1.0.0",
+    "description": "Uma simples API de exemplo documentada com Swagger"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    }
+  ],
+  "paths": {
+      "/livros": {
+        "get": {
+          "summary": "Retornar todos os usuários.",
+          "name": "Livros",
+          "operationId": "listarLivros"
+        }
+        
+      }
+  }
+}
