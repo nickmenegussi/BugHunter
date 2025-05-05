@@ -9,15 +9,48 @@
     {
       "url": "http://localhost:3001"
     }
-  ],
-  "paths": {
-      "/livros": {
-        "get": {
-          "summary": "Retornar todos os usuários.",
-          "name": "Livros",
-          "operationId": "listarLivros"
+  ], "paths": {
+    "/livros": {
+      "post": {
+        "tags": ["Livros"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "listarLivros",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário cadastrado com sucesso"
+          },
+          "500": {
+            "description": "Erro ao cadastrar usuário"
+          }
         }
-        
+      }, "paths":  {
+        "/experiencies/{idUser}/user": {
+          "get": {
+            
+          }
+        }
       }
+    }
   }
+  
+  
 }
