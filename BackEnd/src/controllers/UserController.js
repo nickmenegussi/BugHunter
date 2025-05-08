@@ -279,7 +279,11 @@ exports.DeleteUser = (req, res) => {
         }
 
         if(result.length === 0){
-
+            return res.status(400).json({
+                message: 'Este usuário não existe. Verifique os dados e tente novamente.',
+                success: false,
+                data: err 
+            })
         }
 
         connection.query('DELETE FROM Experiencies where userId = ?', [idUser], (err,result) => {

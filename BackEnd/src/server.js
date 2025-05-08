@@ -19,4 +19,4 @@ app.use('/historic', historic)
 app.use('/experiencies', experiencies)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-app.listen(port, () => console.log(`Rodando na porta ${port}`))
+app.listen(port, () => console.log(`Rodando na porta ${port}\nDocumentação rodando no endereço: http://localhost:3001/api-docs`))
