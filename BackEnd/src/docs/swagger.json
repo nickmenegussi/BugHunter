@@ -1,0 +1,465 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Exemplo",
+    "version": "1.0.0",
+    "description": "Uma simples API de exemplo documentada com Swagger"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    }
+  ],
+  "paths": {
+    
+    "/user/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        
+        
+        "responses": {
+          "200": { "description": "Usuários listados com sucesso" },
+          "500": { "description": "Erro ao buscar usuários." }
+        }
+      }
+    }, 
+    "/user/user/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameUser": { "type": "string" },
+                  "emailUser": { "type": "string" },
+                  "senhaUser": { "type": "string" },
+                  "ageUser": { "type": "number" }
+                },
+                "required": ["nameUser", "emailUser", "senhaUser", "ageUser"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Usuário cadastrado com sucesso" },
+          "400": { "description": "Preencha todos os campos obrigatórios." },
+          "422": { "description": "Este usuário já está registrado. Faça login ou use dados diferentes" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/user/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "emailUser": { "type": "string" },
+                  "senhaUser": { "type": "string" }
+                },
+                "required": ["emailUser", "senhaUser"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Erro ao buscar o usuário" },
+          "400": { "description": "Preencha o e-mail e a senha." },
+          "404": { "description": "Usuário não encontrado. Verifique o e-mail informado" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    }, "/user/user/{idUser}/nameUser": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameUser": { "type": "string" }
+                },
+                "required": ["nameUser"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Nome do usuário atualizado com sucesso." },
+          "400": { "description": "Informe o novo nome e o ID do usuário." },
+          "404": { "description": "Usuário não encontrado com o ID informado." },
+          "500": { "description": "Erro ao buscar o usuário" }
+        }
+      }
+    }, "/user/user/{idUser}/emailUser": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "emailUser": { "type": "string" }
+                },
+                "required": ["emailUser"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Email do usuário trocado com sucesso" },
+          "400": { "description": "Informe o novo nome e o ID do usuário." },
+          "404": { "description": "Usuário não encontrado com o ID informado." },
+          "500": { "description": "Erro ao buscar o usuário" }
+        }
+      }
+    }, "/user/user/{idUser}/novaSenha": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "antigaSenha": { "type": "string" },
+                  "novaSenha": { "type": "string" }
+                },
+                "required": ["antigaSenha", "novaSenha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Email do usuário trocado com sucesso" },
+          "400": { "description": "Preencha todos os campos." },
+          "400-PasswordMismatch": {"description": "Este usuário não existe. Verifique os dados e tente novamente."},
+          "400-UserNotFound": {"description": "Este usuário não existe. Verifique os dados e tente novamente."},
+          "404": { "description": "Usuário não encontrado com o ID informado." },
+          "500": { "description": "Erro ao buscar o usuário" }
+        }
+      }
+    },
+    "/user/user/{idUser}/delete": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Cadastrar um novo usuário.",
+        "operationId": "cadastrarUsuario",
+        "responses": {
+          "200": { 
+            "description": "Sucesso ao deletar usuário"
+          },
+          "400": { 
+            "description": "Este usuário não existe. Verifique os dados e tente novamente."
+          },
+          "500": { 
+            "description": "Erro ao se conectar com o servidor"
+          },
+          "500-ExperiencesDeleteError": { 
+            "description": "Erro ao deletar as Experiências do usuário"
+          },
+          "500-HistoryDeleteError": { 
+            "description": "Erro ao deletar histórico do usuário"
+          },
+          "500-UserDeleteError": { 
+            "description": "Erro ao deletar usuário"
+          }
+        }        
+      }
+    },
+    "/historic/historic/{idHistoric}/user": {
+      "get": {
+        "tags": ["Historic"],
+        "summary": "Visualizar um novo histórico.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/historic/historic/create": {
+      "post": {
+        "tags": ["Historic"],
+        "summary": "Criar um histórico.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/historic/historic/{idExperiencies}/delete": {
+      "delete": {
+        "tags": ["Historic"],
+        "summary": "Deletar um histórico.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/experiencies/experiencies/{idUser}/user": {
+      "get": {
+        "tags": ["Experiencies"],
+        "summary": "Visualiza uma experiência.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/experiencies/experiencies/{idExperiencies}/degree": {
+      "patch": {
+        "tags": ["Experiencies"],
+        "summary": "Altera uma formação.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/experiencies/experiencies/{idExperiencies}/amountOfExperiencie": {
+      "patch": {
+        "tags": ["Experiencies"],
+        "summary": "Altera a quantidade de experiência.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/experiencies/experiencies/{idExperiencies}/areaAtuation": {
+      "patch": {
+        "tags": ["Experiencies"],
+        "summary": "Altera a área de atuação.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/experiencies/experiencies/{idExperiencies}/currentPosition": {
+      "patch": {
+        "tags": ["Experiencies"],
+        "summary": "Alterar o cargo atual.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    },
+    "/experiencies/experiencies/create": {
+      "post": {
+        "tags": ["Experiencies"],
+        "summary": "Criar um histórico.",
+        "operationId": "cadastrarUsuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" },
+                  "email": { "type": "string" },
+                  "placa": { "type": "string" },
+                  "cor": { "type": "string" },
+                  "modelo": { "type": "string" }
+                },
+                "required": ["username", "password", "email", "placa", "cor", "modelo"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuário cadastrado com sucesso" },
+          "500": { "description": "Erro ao cadastrar usuário" }
+        }
+      }
+    }
+  } 
+}

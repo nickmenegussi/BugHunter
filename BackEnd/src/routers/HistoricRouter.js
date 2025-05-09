@@ -5,7 +5,6 @@ const {viewHistoric, createHitoric, DeleteHistoric} = require('../controllers/Hi
 router.get('/historic/:idHistoric/user', viewHistoric)
 // router.patch('/historic/:idHistoric/historic')
 
-
 router.post('/historic/create', createHitoric)
 router.delete('/historiic/:idExperiencies/delete', DeleteHistoric)
 
